@@ -2,12 +2,16 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import altair as alt
+from streamlit.components.v1 import iframe
 
 st.set_page_config(page_title="Multi-App Dashboard", layout="centered")
 
 # Dashboard sidebar navigation
 st.sidebar.title("Dashboard")
-selection = st.sidebar.radio("Choose an app", ("Home", "Random Walk", "Sales Bars", "Data Table", "Scatter Explorer"))
+selection = st.sidebar.radio(
+    "Choose an app",
+    ("Home", "Random Walk", "Sales Bars", "Data Table", "Scatter Explorer", "External App (LAN)")
+)
 
 st.title("Multi-App Dashboard")
 st.markdown("A simple Streamlit dashboard with multiple small demo apps. Use the sidebar to navigate between apps.")
@@ -22,10 +26,12 @@ def show_home():
         - Sales Bars: an example bar chart
         - Data Table: interactive table with filters
         - Scatter Explorer: interactive scatter plot
+        - External App (LAN): link/embed to an internal URL on your LAN
         """
     )
     st.info("This is a single deployable Streamlit app. All sub-apps are rendered inside this file.")
 
+# ... (other app functions unchanged) ...
 def show_random_walk():
     st.header("Random Walk")
     rows = st.slider("Number of points", 10, 2000, 200, step=10)
@@ -72,7 +78,6 @@ def show_sales_bars():
 
 def show_data_table():
     st.header("Interactive Data Table")
-    # make a sample dataset
     n = st.slider("Rows", 10, 2000, 300)
     rng = np.random.default_rng(1)
     df = pd.DataFrame({
@@ -107,6 +112,30 @@ def show_scatter_explorer():
     ).interactive().properties(height=500)
     st.altair_chart(scatter, use_container_width=True)
 
+def show_external_app():
+    st.header("External App (LAN)")
+    external_url = "http://iedubm0app02:8501/"
+
+    st.write("This is a link to an app on your LAN:")
+    # Reliable link that opens in a new tab. Works for LAN users if their browser can resolve the host.
+    st.markdown(
+        f'<a href="{external_url}" target="_blank" rel="noopener noreferrer">Open external app (opens in new tab)</a>',
+        unsafe_allow_html=True
+    )
+
+    st.info(
+        "If you are viewing this dashboard from the same LAN and the target host allows embedding, you can try the experimental embed below. "
+        "If the dashboard is served over HTTPS (for example, Streamlit Cloud), the browser will likely block embedding HTTP content (mixed content)."
+    )
+
+    if st.checkbox("Try to embed the external app here (experimental)"):
+        st.write("Attempting to embed. If you see nothing or a browser error, embedding is blocked by the browser or by the remote server's headers (X-Frame-Options).")
+        try:
+            iframe(external_url, height=800)
+        except Exception as e:
+            st.warning("Embedding failed. Use the link above to open the app in a new tab.")
+            st.write("Embed error:", e)
+
 # Render selected app
 if selection == "Home":
     show_home()
@@ -118,5 +147,7 @@ elif selection == "Data Table":
     show_data_table()
 elif selection == "Scatter Explorer":
     show_scatter_explorer()
+elif selection == "External App (LAN)":
+    show_external_app()
 else:
     st.write("Select an app from the sidebar.")
