@@ -113,7 +113,7 @@ def show_scatter_explorer():
     st.altair_chart(scatter, use_container_width=True)
 
 def show_external_app():
-    st.header("External App (LAN)")
+    st.header("Rack And POD analytics")
     external_url = "http://iedubm0app02:8501/"
 
     st.write("This is a link to an app on your LAN:")
