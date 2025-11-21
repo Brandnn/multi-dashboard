@@ -1,0 +1,32 @@
+
+```
+```toml name=.streamlit/config.toml
+[server]
+headless = true
+enableCORS = false
+port = 8501
+
+[theme]
+primaryColor = "#1f77b4"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f0f2f6"
+font = "sans serif"
+```
+```
+
+Next steps
+- Create a new GitHub repository (e.g., Brandnn/multi-dashboard) and add the files above.
+  - Easiest: use GitHub web UI, Create new file → paste contents, repeat.
+  - Or locally:
+    - git clone https://github.com/Brandnn/multi-dashboard.git
+    - copy the files into the repo folder
+    - git add .
+    - git commit -m "Add multi-app dashboard"
+    - git push origin main
+- Deploy on Streamlit Cloud pointing at app.py.
+
+Would you like me to:
+- create the GitHub repo and push these files for you (I can generate the exact git commands or a curl/gh request — I will need permission details), or
+- walk you step-by-step through creating the repo and pushing these files from your computer?
+
+Which do you prefer?
