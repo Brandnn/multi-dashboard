@@ -10,7 +10,7 @@ st.set_page_config(page_title="Rack And POD Dashboard", layout="centered")
 st.sidebar.title("Dashboard")
 selection = st.sidebar.radio(
     "Choose an app",
-    ("Home", "Random Walk", "Rack And POD analytics,link 2, link 3")
+    ("Home", "link1", "Rack And POD analytics, ")
 )
 
 st.title("Rack And POD Dashboard")
